@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getClients } from '../api';
-import { Client } from '../types';
+import { Client, ClientListProps } from '../types';
+import { fundingSourceMapping } from '../FundingSourceMapping';
 
-interface ClientListProps {
-    onSelectClient: (id: string) => void; // Callback to set the selected client ID
-  }
+const fundingSourceLabels = Object.entries(fundingSourceMapping).reduce((acc, [label, value]) => {
+  acc[value] = label;
+  return acc;
+}, {} as { [key: number]: string });
 
 const ClientList: React.FC<ClientListProps> = ({ onSelectClient }) => {
   const [clients, setClients] = useState<Client[]>([]);
@@ -17,7 +19,7 @@ const ClientList: React.FC<ClientListProps> = ({ onSelectClient }) => {
         const clientsData = await getClients();
         setClients(clientsData);
       } catch (err) {
-        console.error('Error fetching clients:', err); // Log the error
+        console.error('Error fetching clients:', err);
         setError('Failed to fetch clients');
       } finally {
         setLoading(false);
@@ -30,23 +32,40 @@ const ClientList: React.FC<ClientListProps> = ({ onSelectClient }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-  
-
   return (
-    <ul>
-      {clients.map(client => {
-        const formattedDate = client.date_of_birth
-        ? new Date(client.date_of_birth).toLocaleDateString() // Ensure date is not null
-        : 'Date not available'; // Fallback text if date is null
-        return (
-            <li key={client.id} onClick={() => onSelectClient(client.id)} style={{ cursor: 'pointer' }}>
-            {client.id} - {client.name} - {formattedDate} - {client.main_language} - {client.secondary_language} - {client.funding_source_id} 
-          </li>
-        );
-      })}
-    </ul>
+    <div className="client-list-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Main Language</th>
+            <th>Secondary Language</th>
+            <th>Funding Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {clients.map(client => {
+            const formattedDate = client.date_of_birth
+              ? new Date(client.date_of_birth).toLocaleDateString()
+              : 'Date not available';
+
+            const fundingSourceLabel = fundingSourceLabels[client.funding_source_id] || 'Unknown';
+
+            return (
+              <tr key={client.id} onClick={() => onSelectClient(client.id)} style={{ cursor: 'pointer' }}>
+                <td>{client.name}</td>
+                <td>{formattedDate}</td>
+                <td>{client.main_language}</td>
+                <td>{client.secondary_language || 'None'}</td>
+                <td>{fundingSourceLabel}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
-  
 };
 
 export default ClientList;

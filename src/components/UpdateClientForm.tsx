@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { updateClient } from '../api';
+import React, { useState, useEffect } from 'react';
+import { updateClient, deleteClient  } from '../api';
+import { useNavigate } from 'react-router-dom'; 
 import { Client, UpdateClientFormProps } from '../types';
 import InputField from './InputField';
 import DateInputField from './DateInputField';
@@ -8,10 +9,12 @@ import RadioButtonInputField from './RadioButtonInputField';
 import { LANGUAGES } from '../enums';
 import { fundingSourceMapping } from '../FundingSourceMapping';
 
+
 const UpdateClientForm: React.FC<UpdateClientFormProps> = ({ clientId, onSuccess }) => {
   const [clientData, setClientData] = useState<Omit<Client, 'id'> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClientData = async () => {
@@ -61,6 +64,24 @@ const UpdateClientForm: React.FC<UpdateClientFormProps> = ({ clientId, onSuccess
     }
   };
 
+  const handleCancel = () => {
+    setClientData(null);
+    setError(null);
+    setSuccess(null);
+    alert('Form cancelled');
+    navigate('/clients'); 
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteClient(clientId); 
+      setSuccess('Client deleted');
+      navigate('/clients'); 
+    } catch (err) {
+      setError(`Failed to delete client: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
+  };
+
   if (!clientData) return <p>Loading client data...</p>;
 
    // Map funding sources to appropriate structure
@@ -70,45 +91,61 @@ const UpdateClientForm: React.FC<UpdateClientFormProps> = ({ clientId, onSuccess
   }));
 
   return (
-    <div>
-      <h2>Update Client</h2>
-      <form onSubmit={handleSubmit} noValidate>
-        <InputField
-          label="Name"
-          value={clientData.name}
-          onChange={(value) => handleChange('name', value)}
-        />
-        <DateInputField
-          selectedDate={clientData.date_of_birth}
-          onDateChange={handleDateChange}
-        />
-        <SelectInputField
-          label="Main Language"
-          name="main_language"
-          value={clientData.main_language}
-          onChange={(value) => handleChange('main_language', value)}
-          options={LANGUAGES.map(lang => ({ value: lang, label: lang }))}
-          required
-        />
-        <SelectInputField
-          label="Secondary Language"
-          name="secondary_language"
-          value={clientData.secondary_language}
-          onChange={(value) => handleChange('secondary_language', value)}
-          options={LANGUAGES.map(lang => ({ value: lang, label: lang }))}
-        />
-        <RadioButtonInputField
+    <div className="update-client-container">
+      <div className="update-client-header">
+        <h2>Update Client</h2>
+      </div>
+      <form onSubmit={handleSubmit} noValidate className="update-client-form">
+        <div className="form-group">
+          <InputField
+            label="Name"
+            value={clientData.name}
+            onChange={(value) => handleChange('name', value)}
+          />
+        </div>
+        <div className="form-group">
+          <DateInputField
+            selectedDate={clientData.date_of_birth}
+            onDateChange={handleDateChange}
+          />
+        </div>
+        <div className="form-group">
+          <SelectInputField
+            label="Main Language"
+            name="main_language"
+            value={clientData.main_language}
+            onChange={(value) => handleChange('main_language', value)}
+            options={LANGUAGES.map(lang => ({ value: lang, label: lang }))}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <SelectInputField
+            label="Secondary Language"
+            name="secondary_language"
+            value={clientData.secondary_language}
+            onChange={(value) => handleChange('secondary_language', value)}
+            options={LANGUAGES.map(lang => ({ value: lang, label: lang }))}
+          />
+        </div>
+        <div className="form-group">
+          <RadioButtonInputField
             label="Funding Source"
             name="funding_source_id"
             value={clientData.funding_source_id}
             onChange={(value) => handleChange('funding_source_id', value)}
             options={fundingSources}
             required
-        />
-        <button type="submit">Update Client</button>
+          />
+        </div>
+        <div className="button-group">
+          <button type="submit">Update Client</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
+          <button type="button" className="delete-button" onClick={handleDelete}>Delete</button> 
+        </div>
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
     </div>
   );
 };

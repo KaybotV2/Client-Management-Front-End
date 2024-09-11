@@ -5,9 +5,272 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #1e374c;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.wizard-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 5rem auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.wizard-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.wizard-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-step {
+  display: none;
+}
+
+.wizard-step.active {
+  display: block;
+}
+
+.wizard-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+button[type="button"].previous {
+  background-color: #6c757d;
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+
+/* General styling for labels */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+/* General styling for text inputs and textareas */
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding is included in width */
+  font-size: 16px;
+}
+
+/* Styling for select elements */
+select {
+  appearance: none; /* Removes default styling */
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7l5 5 5-5" /%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+}
+
+/* Styling for radio buttons */
+input[type="radio"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+input[type="radio"] + label {
+  display: inline-block;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+/* Optional: Additional focus and hover styles for inputs and selects */
+input:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.2);
+}
+
+input:disabled,
+select:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.update-client-container {
+  max-width: 600px;
+  margin: 5rem auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.update-client-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.update-client-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.update-client-form .form-group {
+  margin-bottom: 16px;
+}
+
+.update-client-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+.update-client-form input[type="text"],
+.update-client-form input[type="date"],
+.update-client-form select,
+.update-client-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding is included in width */
+  font-size: 16px;
+}
+
+.update-client-form select {
+  appearance: none; /* Removes default styling */
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7l5 5 5-5" /%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+}
+
+.update-client-form input[type="radio"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.update-client-form button[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.update-client-form button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+tbody td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.client-list-container,
+.update-client-container {
+  flex: 1; /* Ensure both containers take equal width */
+  margin: 10px; /* Add margin for spacing */
+  border: 1px solid #ccc; /* Optional: Add a border for clarity */
+  padding: 10px;
+}
+
+.client-list-container {
+  max-width: 45%; /* Set a max width to control layout */
+}
+
+.update-client-container {
+  max-width: 45%; /* Set a max width for equal side-by-side display */
+}
+
+
+
+
+
