@@ -38,7 +38,7 @@ Before you begin, ensure you have met the following requirements:
     ```bash
     npm start
 
-This will run the app in development mode. Open your browser and visit http://localhost:3000 to see the application.
+This will run the app in development mode. Open your browser and visit http://localhost:3001 to see the application.
 
 2. **build for production**
     ```bash
