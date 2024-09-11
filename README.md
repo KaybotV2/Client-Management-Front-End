@@ -48,8 +48,8 @@ This will create a build directory with a production build of your app.
 
 ## Running Tests
 To run tests for your application, use the following command:
-    ```bash
-   npm test
+    
+    npm test
 
 ## Troubleshooting
 
