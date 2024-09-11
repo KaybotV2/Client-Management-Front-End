@@ -4,6 +4,27 @@
 
 This project is a React and TypeScript application for managing client information. It includes features such as adding new clients, managing existing client data, and handling form submissions with validation.
 
+## User Interface
+
+### Add Client 
+
+#### Personal Information
+
+![Add Client Personal Information](public/images/add_client1.png)
+
+#### Languages
+
+![Languages](public/images/add_client2.png)
+
+#### Funding Source
+![Funding Source](public/images/add_client3.png)
+
+#### All Clients
+![All Clients](public/images/all_clients.png)
+
+#### Update Clients
+![Update Clients](public/images/update_client.png)
+
 ## Demo
 You can watch a helpful video related to this project [here](https://youtu.be/QdkhyHs1ogk).
 
